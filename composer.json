@@ -1,0 +1,13 @@
+{
+    "name": "ipetike/reactphp",
+    "authors": [
+        {
+            "name": "IPetike",
+            "email": "illes.peter.deb@gmail.com"
+        }
+    ],
+    "require": {
+        "react/react": "^0.4.2",
+        "cboden/ratchet": "^0.3.4"
+    }
+}

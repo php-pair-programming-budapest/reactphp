@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script>
+
+
+        $(document).ready(function(){
+
+            $('#button').prop('disabled', true);
+
+
+            var conn = new WebSocket('ws://127.0.0.1:8080');
+            conn.onopen = function(e) {
+                console.log("Connection established!");
+                $('#button').prop('disabled', false);
+            };
+
+            conn.onmessage = function(e) {
+                console.log(e.data);
+                $('#messages').append('<span style="background-color: chartreuse;">' + e.data + '</span><br />');
+                $('#button').prop('disabled', false);
+            };
+
+            conn.onerror = function(e){
+                console.log(e);
+            };
+
+            $('#chat').submit(function(e){
+                        e.preventDefault();
+
+                        $('#button').prop('disabled', true);
+
+                        var message = $('#message').val();
+
+                        conn.send(JSON.stringify({message: message}));
+
+
+                        $('#message').val('');
+
+                        return false;
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+
+<div id="messages">
+
+</div>
+
+<form id="chat" method="post">
+    <input type="text" name="message" id="message">
+    <input type="submit" name="BUTTON" id="button">
+</form>
+
+
+</body>
+</html>
